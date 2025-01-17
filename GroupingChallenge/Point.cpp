@@ -25,3 +25,10 @@ double CPoint::dCalculateDistance(const CPoint& cOther) const
 }
 
 const vector<double>& CPoint::FgetCoordinates() const { return v_coordinates; }
+
+//dopisane
+CPoint& CPoint::operator=(const CPoint& other)
+{
+	this->v_coordinates = other.v_coordinates;
+	return *this;
+}
