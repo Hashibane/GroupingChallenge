@@ -34,7 +34,6 @@ namespace NGroupingChallenge
 
 		ThreadController<GraphicThread>* graphicMan;
 		ThreadController<PopulationThread<Strategy>>* populationMan;
-		std::vector<population::PopulationManager<Strategy>> managers;
 
 		double d_current_best_fitness;
 		vector<int> v_current_best;

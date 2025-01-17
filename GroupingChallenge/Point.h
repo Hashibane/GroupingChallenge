@@ -15,6 +15,8 @@ namespace NGroupingChallenge
 		double dCalculateDistance(const CPoint& cOther) const;
 
 		const vector<double>& FgetCoordinates() const;
+		//dopisane
+		CPoint& operator=(const CPoint& other);
 	private:
 		const double d_WRONG_DISTANCE_VALUE = -1;
 

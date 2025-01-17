@@ -1,5 +1,6 @@
 #include "Optimizer.h"
 #include "Strategies.hpp"
+#include <chrono>
 
 using namespace NGroupingChallenge;
 using namespace population;
@@ -38,7 +39,7 @@ void COptimizer::vInitialize()
 
 void COptimizer::vRunIteration()
 {
-
+	auto start = std::chrono::high_resolution_clock::now();
 	double fitness;
 	std::vector<int>* solution;
 	auto& workers = populationMan->getWorkers();
@@ -59,23 +60,32 @@ void COptimizer::vRunIteration()
 			v_current_best = *solution;
 			d_current_best_fitness = fitness;
 		}
-		graphicMan->getWorkers()[j]->setJob(solution);
+		if (constants::debug)
+			graphicMan->getWorkers()[j]->setJob(solution);
 		++j;
 	}
 
-	for (auto& i : graphicMan->getWorkers())
+	if (constants::debug)
 	{
-		sf::Event e;
-		while (i->getWindow().pollEvent(e))
+		for (auto& i : graphicMan->getWorkers())
 		{
-			//event handling 
-			if (e.type == sf::Event::Closed)
+			sf::Event e;
+			while (i->getWindow().pollEvent(e))
 			{
-				i->getWindow().close();
+				//event handling 
+				if (e.type == sf::Event::Closed)
+				{
+					i->getWindow().close();
+				}
 			}
 		}
+		graphicMan->waitAll();
 	}
-	graphicMan->waitAll();
+	auto end = std::chrono::high_resolution_clock::now();
+
+	// Calculate the elapsed time in milliseconds
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+	std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
 	std::cout << d_current_best_fitness << "\n";
 }
 
