@@ -2,7 +2,10 @@
 
 Evaluator::Evaluator(const std::vector<NGroupingChallenge::CPoint>& points, int groups) : points(&points), groups(groups), numberOfPoints(points.size()) {}
 
+Evaluator::Evaluator(const Evaluator& other) : points(other.points), groups(other.groups), numberOfPoints(other.numberOfPoints) {}
 //TODO: Optimize evaluation
+//1 - grupowanie grup odleglosciami ? Moze powinien zwracac pare (odleglosci, wynik)?
+//2 - caching - tez mozna pary
 double Evaluator::evaluate(std::vector<int>& solution)
 {
 	bool b_error = points->empty();

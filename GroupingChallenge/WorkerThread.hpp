@@ -75,6 +75,7 @@ public:
 	void setComputingData(Evaluator* e);
 
 	std::vector<int>& getSolution();
+	double getBestScore();
 
 	friend class WorkerThread<PopulationThread<Specimen>>;
 };

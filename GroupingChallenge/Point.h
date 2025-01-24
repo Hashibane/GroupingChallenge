@@ -14,6 +14,7 @@ namespace NGroupingChallenge
 		void vAddCoordinate(double dCoordinate);
 		double dCalculateDistance(const CPoint& cOther) const;
 
+		//dopisane
 		const vector<double>& FgetCoordinates() const;
 		//dopisane
 		CPoint& operator=(const CPoint& other);

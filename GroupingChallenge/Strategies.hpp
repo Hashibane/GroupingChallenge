@@ -12,6 +12,9 @@ namespace population
 	{
 	protected:
 		Evaluator& evaluator;
+		
+		//dzielimy grupy wzgledem odleglosci wewnatrz grupy
+		std::vector<double> groupScore;
 	public:
 		BaseSpecimen(Evaluator& e) : evaluator(e) {}
 

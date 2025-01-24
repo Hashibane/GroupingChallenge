@@ -40,7 +40,6 @@ void COptimizer::vInitialize()
 void COptimizer::vRunIteration()
 {
 	auto start = std::chrono::high_resolution_clock::now();
-	double fitness;
 	std::vector<int>* solution;
 	auto& workers = populationMan->getWorkers();
 	int j = 0;
@@ -50,15 +49,16 @@ void COptimizer::vRunIteration()
 	}
 
 	populationMan->waitAll();
-
+	auto mid = std::chrono::high_resolution_clock::now();
+	auto processing = std::chrono::duration_cast<std::chrono::milliseconds>(mid - start);
+	//std::cout << "Processing time: " << processing.count() << " ms" << std::endl;
 	for (auto& i : workers)
 	{
 		solution = &i->getSolution();
-		fitness = evaluator->evaluate(*solution);
-		if (fitness < d_current_best_fitness)
+		if (i->getBestScore() < d_current_best_fitness)
 		{
 			v_current_best = *solution;
-			d_current_best_fitness = fitness;
+			d_current_best_fitness = i->getBestScore();
 		}
 		if (constants::debug)
 			graphicMan->getWorkers()[j]->setJob(solution);
@@ -85,7 +85,7 @@ void COptimizer::vRunIteration()
 
 	// Calculate the elapsed time in milliseconds
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-	std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
+	//std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
 	std::cout << d_current_best_fitness << "\n";
 }
 

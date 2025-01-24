@@ -9,6 +9,9 @@ private:
 	int numberOfPoints;
 public:
 	Evaluator(const std::vector<NGroupingChallenge::CPoint>& points, int groups);
+	Evaluator(const Evaluator& other);
+
+
 	double evaluate(std::vector<int>& solution);
 	
 
