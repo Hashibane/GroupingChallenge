@@ -92,3 +92,9 @@ std::vector<int>& PopulationThread<Specimen>::getSolution()
 {
 	return solution;
 }
+
+template <typename Specimen>
+double PopulationThread<Specimen>::getBestScore()
+{
+	return bestScore;
+}

@@ -2,8 +2,8 @@
 
 namespace constants
 {
-	constexpr const int populations = 3;
-	constexpr const int populationSize = 10;
+	constexpr const int populations = 8;
+	constexpr const int populationSize = 20;
 
 	constexpr const int lowerBound = 1;
 	constexpr const bool debug = false;
@@ -12,4 +12,4 @@ namespace constants
 	constexpr const int windowHeight = 600;
 	constexpr const float pointSize = 3.;
 }
-//8.457s
+//13s
