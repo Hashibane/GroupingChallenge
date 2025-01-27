@@ -12,6 +12,8 @@ namespace population
 	class BaseSpecimen
 	{
 	protected:
+		bool computed;
+		double score;
 		std::vector<int> solution;
 		std::vector<int> genRandom(int low, int high, int size)
 		{
@@ -26,9 +28,9 @@ namespace population
 			return next;
 		}
 	public:
-		BaseSpecimen() : solution() {}
-		BaseSpecimen(std::vector<int>& s) : solution(s) {}
-		BaseSpecimen(std::vector<int>&& s) : solution(s) {}
+		BaseSpecimen() : solution(), computed(false) {}
+		BaseSpecimen(std::vector<int>& s) : solution(s), computed(false) {}
+		BaseSpecimen(std::vector<int>&& s) : solution(s), computed(false) {}
 		inline void init(int low, int high, int size)
 		{
 			solution = genRandom(low, high, size);
@@ -42,6 +44,10 @@ namespace population
 			static_cast<Child*>(this)->setSolution(solution);
 		}
 		inline std::vector<int>* getSolutionAddr() { return &solution; }
+		inline void setComputed(bool b) { computed = b; }
+		inline bool getComputed() { return computed; }
+		inline void setScore(double s) { score = s; }
+		inline double getScore() { return score; }
 	};
 	/*
 	class RandomSpecimen : BaseSpecimen<RandomSpecimen>
