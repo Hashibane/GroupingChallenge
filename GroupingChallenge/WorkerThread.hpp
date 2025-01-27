@@ -86,6 +86,8 @@ public:
 	std::vector<int>& getSolution();
 	double getBestScore();
 
+	std::vector<Specimen>& getSpecimens();
+
 	friend class WorkerThread<PopulationThread<Specimen, Selection, Breeding, Mutator>>;
 };
 

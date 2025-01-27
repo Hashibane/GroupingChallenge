@@ -3,9 +3,9 @@
 #include <random>
 namespace constants
 {
-	constexpr const int populations = 1;
-	constexpr const int populationSize = 100;
-	constexpr const int tournamentSize = 20;
+	constexpr const int populations = 24;
+	constexpr const int populationSize = 20;
+	constexpr const int tournamentSize = 10;
 	//TODO static assert tw > 0
 	constexpr const int tournamentWinners = 3;
 	constexpr const double pTournament = 0.15;
@@ -16,6 +16,11 @@ namespace constants
 
 	constexpr const double epsilon = 10;
 
+	constexpr const double migrationPercent = 0.3;
+	constexpr const double migrationPopulationPercent = 0.1;
+	constexpr const double migrationSize = populationSize * migrationPopulationPercent;
+	constexpr const int migrations = populations * migrationPercent;
+
 	constexpr const int lowerBound = 1;
 	constexpr const bool debug = true;
 
@@ -25,4 +30,3 @@ namespace constants
 }
 
 //13s
-// todo : optymalizacja selekcji - niech kazdy osobnik trzyma swoj wynik + migracja

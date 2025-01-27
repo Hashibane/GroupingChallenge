@@ -23,9 +23,13 @@ class Uniform //: public CrossingStrategy<Uniform<Generator>>
 private:
 	int size;
 	Randomizer < uint_fast64_t > generator;
+	//buffers
+	std::vector <int> newSolution;
+	std::vector<int>* p1;
+	std::vector<int>* p2;
 public:
 	Uniform(Generator& gen);
-	void cross(std::vector<Specimen*>& selected, Specimen* output);
+	void cross(std::vector<Specimen*>&& selected, Specimen* output);
 	void init(int s);
 };
 
