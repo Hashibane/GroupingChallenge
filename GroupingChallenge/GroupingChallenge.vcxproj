@@ -83,7 +83,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Breeding.cpp" />
     <ClCompile Include="GaussianGroupingEvaluatorFactory.cpp" />
     <ClCompile Include="GraphicThread.cpp" />
     <ClCompile Include="GroupingChallenge.cpp" />
@@ -138,26 +139,36 @@
     <ClCompile Include="MyOwnEvaluator.cpp" />
     <ClCompile Include="Optimizer.cpp" />
     <ClCompile Include="Point.cpp" />
-    <ClCompile Include="PopulationManager.tpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="RenderingCode.cpp" />
     <ClCompile Include="ThreadController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Breeding.hpp" />
     <ClInclude Include="GaussianGroupingEvaluatorFactory.h" />
     <ClInclude Include="GroupingEvaluator.h" />
+    <ClInclude Include="Mutator.hpp" />
     <ClInclude Include="MyOwnEvaluator.hpp" />
     <ClInclude Include="Optimizer.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="PopulationManager.hpp" />
+    <ClInclude Include="ContainerQueue.hpp" />
+    <ClInclude Include="Random.hpp" />
     <ClInclude Include="RenderingCode.hpp" />
+    <ClInclude Include="Selection.hpp" />
     <ClInclude Include="Settings.hpp" />
     <ClInclude Include="Strategies.hpp" />
     <ClInclude Include="ThreadController.hpp" />
     <ClInclude Include="WorkerThread.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Breeding.tpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Mutator.tpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Selection.tpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="ThreadController.tpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </None>

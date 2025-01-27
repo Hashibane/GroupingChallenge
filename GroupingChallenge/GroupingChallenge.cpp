@@ -7,7 +7,7 @@ using namespace NGroupingChallenge;
 int main()
 {
 
-	CGaussianGroupingEvaluatorFactory c_evaluator_factory(5, 100, 5);
+	CGaussianGroupingEvaluatorFactory c_evaluator_factory(5, 500, 5);
 	//meanMin, meanMax, stdMin, stdMax
 	c_evaluator_factory
 		.cAddDimension(-100, 100, 1.0, 3.0)
