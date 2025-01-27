@@ -6,7 +6,7 @@ ThreadController<T>::ThreadController(int workerCount) : lock(mtx), workerCount(
 	workers.reserve(workerCount);
 	for (size_t i = 0; i < workerCount; ++i)
 	{
-		workers.push_back(new T(this));
+		workers.push_back(new T(this, i));
 	}
 }
 

@@ -7,14 +7,17 @@
 #include "Strategies.hpp"
 #include "Settings.hpp"
 #include "WorkerThread.hpp"
-
+#include "Breeding.hpp"
+#include "Mutator.hpp"
 #include <iostream>
 #include <numeric>
 #include <random>
 #include <vector>
-
-using Strategy = population::RandomSpecimen;
-
+#include "Selection.hpp"
+using Strategy = population::BreedableSpecimen;
+using Selection = MixedSelection<Strategy, std::mt19937>;
+using Breeding = Uniform<Strategy>;
+using Mutator = BasicMutator<Strategy, std::mt19937>;
 namespace NGroupingChallenge
 {
 	class COptimizer
@@ -33,7 +36,7 @@ namespace NGroupingChallenge
 		Evaluator* evaluator;
 
 		ThreadController<GraphicThread>* graphicMan;
-		ThreadController<PopulationThread<Strategy>>* populationMan;
+		ThreadController<PopulationThread<Strategy, Selection, Breeding, Mutator>>* populationMan;
 
 		double d_current_best_fitness;
 		vector<int> v_current_best;

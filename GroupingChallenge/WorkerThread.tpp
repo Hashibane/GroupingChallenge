@@ -1,7 +1,7 @@
 #include "WorkerThread.hpp"
-
+#include <iostream>
 template <typename Child>
-WorkerThread<Child>::WorkerThread(ThreadController<Child>* master) : master(master), hasJob(false), dying(false), thread(&WorkerThread<Child>::run, this) {}
+WorkerThread<Child>::WorkerThread(ThreadController<Child>* master, int id) :  master(master), id(id), hasJob(false), dying(false), thread(&WorkerThread<Child>::run, this) {}
 
 template <typename Child>
 void WorkerThread<Child>::run()
@@ -33,68 +33,94 @@ constexpr bool WorkerThread<Child>::isAsync()
 }
 
 
-template <typename Specimen>
-PopulationThread<Specimen>::PopulationThread(ThreadController<PopulationThread>* master) : evaluator(nullptr), WorkerThread<PopulationThread>(master), bestScore(std::numeric_limits<double>::max()) {}
+template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
+PopulationThread<Specimen, Selection, Breeding, Mutator>::PopulationThread(ThreadController<PopulationThread>* master, int id) : evaluator(nullptr), WorkerThread<PopulationThread>(master, id), bestScore(std::numeric_limits<double>::max()), selectionStrategy(engine), breedingStrategy(engine), mutator(engine) {}
 
-template <typename Specimen>
-void PopulationThread<Specimen>::run()
+template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
+void PopulationThread<Specimen, Selection, Breeding, Mutator>::run()
 {
 	double score;
 	vector<int> candidate;
 	for (auto& i : specimens)
 	{
-		candidate = i.soulution();
+		candidate = i.getSolution();
 		score = evaluator->evaluate(candidate);
 		if (score < bestScore)
 		{
 			this->bestScore = score;
 			this->solution = candidate;
 		}
+		
 	}
+	std::vector<Specimen*> selected = selectionStrategy.select(constants::populationSize);
+
+	breedingStrategy.cross(selected, &next[0]);
+	/*
+	int ctr = 0;
+	for (auto& i : specimens)
+	{
+		candidate = i.getSolution();
+		score = evaluator->evaluate(candidate);
+		std::cout << "SPECIMEN " << ctr << " : " << score<<"\n";
+		++ctr;
+	}
+	*/
+	mutator.mutate(next);
+	specimens = next;
 
 }
 
-template <typename Specimen>
-bool PopulationThread<Specimen>::condition()
+template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
+bool PopulationThread<Specimen, Selection, Breeding, Mutator>::condition()
 {
 	return true;
 }
 
-template <typename Specimen>
-void PopulationThread<Specimen>::setJob()
+template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
+void PopulationThread<Specimen, Selection, Breeding, Mutator>::setJob()
 {
 	{
-		std::lock_guard lock{ WorkerThread<PopulationThread<Specimen>>::mtx };
-		WorkerThread<PopulationThread<Specimen>>::hasJob = true;
+		std::lock_guard lock{ WorkerThread<PopulationThread<Specimen, Selection, Breeding, Mutator>>::mtx };
+		WorkerThread<PopulationThread<Specimen, Selection, Breeding, Mutator>>::hasJob = true;
 	}
-	WorkerThread<PopulationThread<Specimen>>::cv.notify_one();
+	WorkerThread<PopulationThread<Specimen, Selection, Breeding, Mutator>>::cv.notify_one();
 }
 
-template <typename Specimen>
-void PopulationThread<Specimen>::kill()
+template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
+void PopulationThread<Specimen, Selection, Breeding, Mutator>::kill()
 {
 	{
-		std::lock_guard lock{ WorkerThread<PopulationThread<Specimen>>::mtx };
-		WorkerThread<PopulationThread<Specimen>>::dying = true;
+		std::lock_guard lock{ WorkerThread<PopulationThread<Specimen, Selection, Breeding, Mutator>>::mtx };
+		WorkerThread<PopulationThread<Specimen, Selection, Breeding, Mutator>>::dying = true;
 	}
-	WorkerThread<PopulationThread<Specimen>>::cv.notify_one();
+	WorkerThread<PopulationThread<Specimen, Selection, Breeding, Mutator>>::cv.notify_one();
 }
 
-template <typename Specimen>
-void PopulationThread<Specimen>::setComputingData(Evaluator* e)
+template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
+void PopulationThread<Specimen, Selection, Breeding, Mutator>::setComputingData(Evaluator* e)
 {
 	evaluator = e;
-	specimens = std::vector<Specimen>(constants::populationSize, Specimen(*e));
+	specimens = std::vector<Specimen>(constants::populationSize);
+	next = std::vector<Specimen>(constants::populationSize);
+	for (auto& i : specimens)
+	{
+		i.init(e->lowerBound(), e->upperBound(), e->getNumberOfPoints());
+	}
+	//breedingStrategy.init(e->getNumberOfPoints());
+	selectionStrategy.init(&specimens, e);
+	breedingStrategy.init(evaluator->getNumberOfPoints());
+	mutator.init(evaluator->getNumberOfPoints(), evaluator->upperBound());
+	engine.seed(std::rand());
 }
 
-template <typename Specimen>
-std::vector<int>& PopulationThread<Specimen>::getSolution()
+template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
+std::vector<int>& PopulationThread<Specimen, Selection, Breeding, Mutator>::getSolution()
 {
 	return solution;
 }
 
-template <typename Specimen>
-double PopulationThread<Specimen>::getBestScore()
+template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
+double PopulationThread<Specimen, Selection, Breeding, Mutator>::getBestScore()
 {
 	return bestScore;
 }

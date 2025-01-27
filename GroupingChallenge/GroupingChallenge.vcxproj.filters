@@ -31,11 +31,14 @@
     <Filter Include="Header Files\Threads">
       <UniqueIdentifier>{483fec45-d288-4a17-8f7b-f6a923b0a86c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Threads">
-      <UniqueIdentifier>{52788401-36d7-4411-ab63-e817e5fa74b9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Computation">
       <UniqueIdentifier>{f18c6fd3-a0a1-49e3-8486-32b028a5fa19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Custom utils">
+      <UniqueIdentifier>{ebe53472-b54d-461e-8bd1-b96f7dbc53e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Threads">
+      <UniqueIdentifier>{52788401-36d7-4411-ab63-e817e5fa74b9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -57,9 +60,6 @@
     <ClCompile Include="RenderingCode.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="PopulationManager.tpp">
-      <Filter>Header Files\Computation</Filter>
-    </ClCompile>
     <ClCompile Include="MyOwnEvaluator.cpp">
       <Filter>Source Files\Computation</Filter>
     </ClCompile>
@@ -68,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="GraphicThread.cpp">
       <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Breeding.cpp">
+      <Filter>Source Files\Computation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +95,6 @@
     <ClInclude Include="MyOwnEvaluator.hpp">
       <Filter>Header Files\Computation</Filter>
     </ClInclude>
-    <ClInclude Include="PopulationManager.hpp">
-      <Filter>Header Files\Computation</Filter>
-    </ClInclude>
     <ClInclude Include="Strategies.hpp">
       <Filter>Header Files\Computation</Filter>
     </ClInclude>
@@ -104,13 +104,37 @@
     <ClInclude Include="WorkerThread.hpp">
       <Filter>Header Files\Threads</Filter>
     </ClInclude>
+    <ClInclude Include="Breeding.hpp">
+      <Filter>Header Files\Computation</Filter>
+    </ClInclude>
+    <ClInclude Include="Selection.hpp">
+      <Filter>Header Files\Computation</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerQueue.hpp">
+      <Filter>Header Files\Custom utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.hpp">
+      <Filter>Header Files\Custom utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Mutator.hpp">
+      <Filter>Header Files\Computation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="WorkerThread.tpp">
-      <Filter>Header Files\Threads</Filter>
-    </None>
     <None Include="ThreadController.tpp">
-      <Filter>Header Files\Threads</Filter>
+      <Filter>Source Files\Threads</Filter>
+    </None>
+    <None Include="WorkerThread.tpp">
+      <Filter>Source Files\Threads</Filter>
+    </None>
+    <None Include="Breeding.tpp">
+      <Filter>Source Files\Computation</Filter>
+    </None>
+    <None Include="Selection.tpp">
+      <Filter>Source Files\Computation</Filter>
+    </None>
+    <None Include="Mutator.tpp">
+      <Filter>Source Files\Computation</Filter>
     </None>
   </ItemGroup>
 </Project>

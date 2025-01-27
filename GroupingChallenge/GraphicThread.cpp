@@ -1,6 +1,6 @@
 #include "WorkerThread.hpp"
 
-GraphicThread::GraphicThread(ThreadController<GraphicThread>* master) : WorkerThread<GraphicThread>(master), points(nullptr), numberOfGroups(0), solution(nullptr), window(nullptr) {}
+GraphicThread::GraphicThread(ThreadController<GraphicThread>* master, int id) : WorkerThread<GraphicThread>(master, id), points(nullptr), numberOfGroups(0), solution(nullptr), window(nullptr) {}
 
 
 void GraphicThread::run()

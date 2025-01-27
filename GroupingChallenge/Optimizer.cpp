@@ -22,9 +22,10 @@ void COptimizer::vInitialize()
 {
 	//thread local?
 	evaluator = new Evaluator(c_evaluator.vGetPoints(), c_evaluator.iGetUpperBound());
+
 	d_current_best_fitness = numeric_limits<double>::max();
 
-	populationMan = new ThreadController<PopulationThread<Strategy>>(constants::populations);
+	populationMan = new ThreadController<PopulationThread<Strategy, Selection, Breeding, Mutator>>(constants::populations);
 	graphicMan = new ThreadController<GraphicThread>(constants::populations);
 
 	for (auto& i : populationMan->getWorkers())
