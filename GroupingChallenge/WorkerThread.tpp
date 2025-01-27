@@ -41,17 +41,39 @@ void PopulationThread<Specimen, Selection, Breeding, Mutator>::run()
 {
 	double score;
 	vector<int> candidate;
+	double max_sc = 0;
+	double min_sc = numeric_limits<double>::max();
+
 	for (auto& i : specimens)
 	{
 		candidate = i.getSolution();
 		score = evaluator->evaluate(candidate);
+		if (score > max_sc)
+		{
+			max_sc = score;
+		}
+		else if (score < min_sc)
+		{
+			min_sc = score;
+		}
 		if (score < bestScore)
 		{
 			this->bestScore = score;
 			this->solution = candidate;
 		}
-		
+
 	}
+
+	if (max_sc - min_sc < constants::epsilon)
+	{
+		mutator.setProba(constants::pMutationHigh);
+	}
+	else
+	{
+		mutator.setProba(constants::pMutationLow);
+	}
+
+	//todo : zrobic, zeby cross obslugiwal rvalue
 	std::vector<Specimen*> selected = selectionStrategy.select(constants::populationSize);
 
 	breedingStrategy.cross(selected, &next[0]);
@@ -65,9 +87,9 @@ void PopulationThread<Specimen, Selection, Breeding, Mutator>::run()
 		++ctr;
 	}
 	*/
+
 	mutator.mutate(next);
 	specimens = next;
-
 }
 
 template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
@@ -111,6 +133,7 @@ void PopulationThread<Specimen, Selection, Breeding, Mutator>::setComputingData(
 	breedingStrategy.init(evaluator->getNumberOfPoints());
 	mutator.init(evaluator->getNumberOfPoints(), evaluator->upperBound());
 	engine.seed(std::rand());
+
 }
 
 template <typename Specimen, typename Selection, typename Breeding, typename Mutator>

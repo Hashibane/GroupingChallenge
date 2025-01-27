@@ -19,12 +19,12 @@ class BasicMutator : public BaseMutator<BasicMutator<Specimen, Generator>, Speci
 {
 private:
 	using Base = BaseMutator<BasicMutator<Specimen, Generator>, Specimen, Generator>;
-	typename const Generator::result_type _mutationNumber = constants::pMutation * Generator::max();
-	typename const Generator::result_type _geneNumber = constants::pMutationGene * Generator::max();
+	typename Generator::result_type _mutationNumber = constants::pMutationLow * Generator::max();
 public:
 	BasicMutator(Generator& g);
 	void mutate(std::vector<Specimen>& specimens);
 	void init(int s, int upperBound);
+	void setProba(double proba);
 };
 
 

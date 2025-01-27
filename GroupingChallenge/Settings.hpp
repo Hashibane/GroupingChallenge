@@ -11,8 +11,10 @@ namespace constants
 	constexpr const double pTournament = 0.15;
 	constexpr const double pRandom = 1 - pTournament;
 	//constexpr const int bufferSize = 1000;
-	constexpr const double pMutation = 0.2;
-	constexpr const double pMutationGene = 0.002;
+	constexpr const double pMutationLow = 0.2; //1/pop * 0.2
+	constexpr const double pMutationHigh = 0.6;
+
+	constexpr const double epsilon = 10;
 
 	constexpr const int lowerBound = 1;
 	constexpr const bool debug = true;
@@ -23,3 +25,4 @@ namespace constants
 }
 
 //13s
+// todo : optymalizacja selekcji - niech kazdy osobnik trzyma swoj wynik + migracja
