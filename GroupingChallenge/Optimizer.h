@@ -33,6 +33,7 @@ namespace NGroupingChallenge
 		std::vector<int>* pvGetCurrentBest() { return &v_current_best; }
 
 	private:
+		int iteration;
 
 		CGroupingEvaluator& c_evaluator; 
 		Evaluator* evaluator;

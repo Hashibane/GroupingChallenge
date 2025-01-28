@@ -148,6 +148,7 @@
     <ClInclude Include="Breeding.hpp" />
     <ClInclude Include="GaussianGroupingEvaluatorFactory.h" />
     <ClInclude Include="GroupingEvaluator.h" />
+    <ClInclude Include="Handler.hpp" />
     <ClInclude Include="Mutator.hpp" />
     <ClInclude Include="MyOwnEvaluator.hpp" />
     <ClInclude Include="Optimizer.h" />

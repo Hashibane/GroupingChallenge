@@ -40,6 +40,12 @@
     <Filter Include="Source Files\Threads">
       <UniqueIdentifier>{52788401-36d7-4411-ab63-e817e5fa74b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\File Handling">
+      <UniqueIdentifier>{690bbeb1-1dd5-4f8e-bc6c-1407b2e76923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FileHandling">
+      <UniqueIdentifier>{9af2d172-7a8e-4f8e-8948-471d2bfe8289}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GaussianGroupingEvaluatorFactory.cpp">
@@ -118,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="Mutator.hpp">
       <Filter>Header Files\Computation</Filter>
+    </ClInclude>
+    <ClInclude Include="Handler.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

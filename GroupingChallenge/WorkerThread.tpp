@@ -123,7 +123,7 @@ void PopulationThread<Specimen, Selection, Breeding, Mutator>::setComputingData(
 	next = std::vector<Specimen>(constants::populationSize);
 	for (auto& i : specimens)
 	{
-		i.init(e->lowerBound(), e->upperBound(), e->getNumberOfPoints());
+		i.init(std::move(e->getRandomSolution()));
 	}
 	//breedingStrategy.init(e->getNumberOfPoints());
 	selectionStrategy.init(&specimens, e);

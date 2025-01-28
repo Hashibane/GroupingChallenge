@@ -14,25 +14,13 @@ namespace population
 	protected:
 		double score;
 		std::vector<int> solution;
-		std::vector<int> genRandom(int low, int high, int size)
-		{
-			uniform_int_distribution<int> candidate_distribution(low, high);
-
-			std::vector<int> next;
-			for (size_t i = 0; i < size; i++)
-			{
-				next.push_back(candidate_distribution(random_engine));
-			}
-
-			return next;
-		}
 	public:
 		BaseSpecimen() : solution() {}
 		BaseSpecimen(std::vector<int>& s) : solution(s) {}
 		BaseSpecimen(std::vector<int>&& s) : solution(s) {}
-		inline void init(int low, int high, int size)
+		inline void init(std::vector<int>&& s)
 		{
-			solution = genRandom(low, high, size);
+			solution = s;
 		}
 		inline std::vector<int>& getSolution()
 		{
@@ -92,9 +80,9 @@ namespace population
 			this->solution = solution;
 		}
 
-		inline void init(int low, int high, int size)
+		inline void init(std::vector<int>&& s)
 		{
-			BaseSpecimen::init(low, high, size);
+			BaseSpecimen::init(std::move(s));
 		}
 		inline std::vector<int>* getSolutionAddr()
 		{

@@ -21,7 +21,7 @@ COptimizer::~COptimizer()
 
 void COptimizer::vInitialize()
 {
-	//thread local?
+	iteration = 0;
 	evaluator = new Evaluator(c_evaluator.vGetPoints(), c_evaluator.iGetUpperBound());
 
 	d_current_best_fitness = numeric_limits<double>::max();
@@ -67,6 +67,7 @@ void COptimizer::vRunIteration()
 		++j;
 	}
 
+	++iteration;
 	migration();
 
 	if (constants::debug)
@@ -91,21 +92,26 @@ void COptimizer::vRunIteration()
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 	std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
 	std::cout << d_current_best_fitness << "\n";
+
 }
 
 void COptimizer::migration()
 {
 	int p1, p2, index;
-	// TODO : niech migracja zachodzi co 100 tur
-	for (int i = 0; i < constants::migrations; ++i)
+	if (iteration == 300)
 	{
-		p1 = c_random_engine() % constants::populations;
-		p2 = c_random_engine() % constants::populations;
-		for (int j = 0; j < constants::migrationSize; ++j)
+		for (int i = 0; i < constants::migrations; ++i)
 		{
-			index = c_random_engine() % constants::populationSize;
-			std::swap(populationMan->getWorkers()[p1]->getSpecimens()[index], populationMan->getWorkers()[p2]->getSpecimens()[index]);
-		}
+			p1 = c_random_engine() % constants::populations;
+			p2 = c_random_engine() % constants::populations;
+			for (int j = 0; j < constants::migrationSize; ++j)
+			{
+				index = c_random_engine() % constants::populationSize;
+				std::swap(populationMan->getWorkers()[p1]->getSpecimens()[index], populationMan->getWorkers()[p2]->getSpecimens()[index]);
+			}
 
+		}
+		iteration = 0;
 	}
+
 }
