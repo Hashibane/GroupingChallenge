@@ -7,7 +7,7 @@ using namespace NGroupingChallenge;
 
 int main()
 {
-	/*
+	
 	CGaussianGroupingEvaluatorFactory c_evaluator_factory(5, 10000, 5);
 	//meanMin, meanMax, stdMin, stdMax
 	c_evaluator_factory
@@ -21,10 +21,11 @@ int main()
 		//.cAddDimension(-100, 100, 1.0, 1.0)
 		//.cAddDimension(-100, 100, 1.0, 1.0)
 		//.cAddDimension(-100, 100, 1.0, 1.0);
-		*/
+		/*
 	Handler h{ "data.txt" };
 	CGroupingEvaluator* pc_evaluator = new CGroupingEvaluator(10, h.read());
-
+	*/
+	CGroupingEvaluator* pc_evaluator = c_evaluator_factory.pcCreateEvaluator(0);
 	COptimizer c_optimizer(*pc_evaluator);
 
 	c_optimizer.vInitialize();

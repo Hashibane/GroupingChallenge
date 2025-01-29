@@ -19,6 +19,14 @@ public:
 	ThreadController(int workerCount);
 	~ThreadController();
 
+	ThreadController(const ThreadController<Worker>& other) = delete;
+	//mutexes should not be moved
+	ThreadController(ThreadController<Worker>&& other) = delete;
+
+	ThreadController<Worker>& operator=(const ThreadController<Worker>& other) = delete;
+	//mutexes should not be moved
+	ThreadController<Worker>& operator=(ThreadController<Worker>&& other) = delete;
+
 	void reserve(int n);
 	void signalDone();
 	void waitAll();

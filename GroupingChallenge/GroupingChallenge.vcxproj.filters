@@ -101,7 +101,7 @@
     <ClInclude Include="MyOwnEvaluator.hpp">
       <Filter>Header Files\Computation</Filter>
     </ClInclude>
-    <ClInclude Include="Strategies.hpp">
+    <ClInclude Include="Specimens.hpp">
       <Filter>Header Files\Computation</Filter>
     </ClInclude>
     <ClInclude Include="ThreadController.hpp">
@@ -125,8 +125,14 @@
     <ClInclude Include="Mutator.hpp">
       <Filter>Header Files\Computation</Filter>
     </ClInclude>
+    <ClInclude Include="PopulationThread.hpp">
+      <Filter>Header Files\Threads</Filter>
+    </ClInclude>
     <ClInclude Include="Handler.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\File Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicThread.hpp">
+      <Filter>Header Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +150,9 @@
     </None>
     <None Include="Mutator.tpp">
       <Filter>Source Files\Computation</Filter>
+    </None>
+    <None Include="PopulationThread.tpp">
+      <Filter>Source Files\Threads</Filter>
     </None>
   </ItemGroup>
 </Project>

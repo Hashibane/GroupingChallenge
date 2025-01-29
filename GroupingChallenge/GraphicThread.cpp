@@ -1,4 +1,4 @@
-#include "WorkerThread.hpp"
+#include "GraphicThread.hpp"
 
 GraphicThread::GraphicThread(ThreadController<GraphicThread>* master, int id) : WorkerThread<GraphicThread>(master, id), points(nullptr), numberOfGroups(0), solution(nullptr), window(nullptr) {}
 
@@ -43,6 +43,11 @@ void GraphicThread::kill()
 	}
 	delete points;
 	cv.notify_one();
+}
+
+void GraphicThread::close()
+{
+	delete window;
 }
 
 void GraphicThread::setRenderData(const std::vector<NGroupingChallenge::CPoint>* pts, int groups)

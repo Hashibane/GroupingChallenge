@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="Breeding.hpp" />
     <ClInclude Include="GaussianGroupingEvaluatorFactory.h" />
+    <ClInclude Include="GraphicThread.hpp" />
     <ClInclude Include="GroupingEvaluator.h" />
     <ClInclude Include="Handler.hpp" />
     <ClInclude Include="Mutator.hpp" />
@@ -154,11 +155,12 @@
     <ClInclude Include="Optimizer.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="ContainerQueue.hpp" />
+    <ClInclude Include="PopulationThread.hpp" />
     <ClInclude Include="Random.hpp" />
     <ClInclude Include="RenderingCode.hpp" />
     <ClInclude Include="Selection.hpp" />
     <ClInclude Include="Settings.hpp" />
-    <ClInclude Include="Strategies.hpp" />
+    <ClInclude Include="Specimens.hpp" />
     <ClInclude Include="ThreadController.hpp" />
     <ClInclude Include="WorkerThread.hpp" />
   </ItemGroup>
@@ -167,6 +169,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="Mutator.tpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="PopulationThread.tpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="Selection.tpp">

@@ -1,5 +1,6 @@
 #include "Optimizer.h"
-#include "Strategies.hpp"
+#include "Specimens.hpp"
+
 #include <chrono>
 
 using namespace NGroupingChallenge;
@@ -14,10 +15,15 @@ COptimizer::COptimizer(CGroupingEvaluator& cEvaluator)
 
 COptimizer::~COptimizer()
 {
+	for (auto& i : graphicMan->getWorkers())
+	{
+		i->close();
+	}
 	delete graphicMan;
 	delete populationMan;
 	delete evaluator;
 }
+
 
 void COptimizer::vInitialize()
 {

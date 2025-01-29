@@ -4,16 +4,19 @@
 #include "GroupingEvaluator.h"
 #include "MyOwnEvaluator.hpp"
 #include "PopulationManager.hpp"
-#include "Strategies.hpp"
+#include "Specimens.hpp"
 #include "Settings.hpp"
 #include "WorkerThread.hpp"
+#include "GraphicThread.hpp"
 #include "Breeding.hpp"
 #include "Mutator.hpp"
+#include "Selection.hpp"
+#include "PopulationThread.hpp"
 #include <iostream>
 #include <numeric>
 #include <random>
 #include <vector>
-#include "Selection.hpp"
+
 using Strategy = population::BreedableSpecimen;
 using Selection = MixedSelection<Strategy, std::mt19937>;
 using Breeding = Uniform<Strategy>;
@@ -26,6 +29,13 @@ namespace NGroupingChallenge
 	public:
 		COptimizer(CGroupingEvaluator& cEvaluator);
 		~COptimizer();
+		//Skoro na poczatku ich nie bylo, to czemu teraz by mialy
+		COptimizer(const COptimizer& other) = delete;
+		COptimizer(COptimizer&& other) = delete;
+
+		COptimizer& operator=(const COptimizer& other) = delete;
+		COptimizer& operator=(COptimizer&& other) = delete;
+
 
 		void vInitialize();
 		void vRunIteration();

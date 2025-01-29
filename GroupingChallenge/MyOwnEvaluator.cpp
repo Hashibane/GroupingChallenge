@@ -6,22 +6,20 @@
 Evaluator::Evaluator(const std::vector<NGroupingChallenge::CPoint>& points, int groups) : points(&points), groups(groups), numberOfPoints(points.size()), distances(std::vector<std::vector<double>>(points.size(), std::vector<double>(points.size())))
 {
 	double buffer;
-	if (numberOfPoints < 55000)
+
+	for (int i = 0; i < numberOfPoints; ++i)
 	{
-		for (int i = 0; i < numberOfPoints; ++i)
+		for (int j = i + 1; j < numberOfPoints; ++j)
 		{
-			for (int j = i + 1; j < numberOfPoints; ++j)
-			{
-				buffer = points[i].dCalculateDistance(points[j]);
-				distances[i][j] = buffer;
-				distances[j][i] = buffer;
-			}
+			buffer = points[i].dCalculateDistance(points[j]);
+			distances[i][j] = buffer;
+			distances[j][i] = buffer;
 		}
 	}
 	
+	
 }
 
-Evaluator::Evaluator(const Evaluator& other) : points(other.points), groups(other.groups), numberOfPoints(other.numberOfPoints) {}
 //TODO: Optimize evaluation
 //1 - grupowanie grup odleglosciami ? Moze powinien zwracac pare (odleglosci, wynik)?
 //2 - caching - tez mozna pary
@@ -48,32 +46,29 @@ double Evaluator::evaluate(std::vector<int>& solution)
 double Evaluator::evaluate(std::vector<int>&& solution)
 {
 	double d_distance_sum = 0;
-	if (numberOfPoints < 55000)
+	
+	for (size_t i = 0; i + 1 < numberOfPoints; ++i)
 	{
-		for (size_t i = 0; i + 1 < numberOfPoints; ++i)
+		for (size_t j = i + 1; j < numberOfPoints; ++j)
 		{
-			for (size_t j = i + 1; j < numberOfPoints; ++j)
+			if (solution[i] == solution[j])
 			{
-				if (solution[i] == solution[j])
-				{
-					d_distance_sum += distances[i][j];
-				}
+				d_distance_sum += distances[i][j];
 			}
 		}
 	}
-	else
+	
+	for (size_t i = 0; i + 1 < numberOfPoints; ++i)
 	{
-		for (size_t i = 0; i + 1 < numberOfPoints; ++i)
+		for (size_t j = i + 1; j < numberOfPoints; ++j)
 		{
-			for (size_t j = i + 1; j < numberOfPoints; ++j)
+			if (solution[i] == solution[j])
 			{
-				if (solution[i] == solution[j])
-				{
-					d_distance_sum += (*points)[i].dCalculateDistance((*points)[j]);
-				}
+				d_distance_sum += (*points)[i].dCalculateDistance((*points)[j]);
 			}
 		}
 	}
+	
 	
 
 	return d_distance_sum;

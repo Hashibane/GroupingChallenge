@@ -18,21 +18,21 @@ namespace population
 		BaseSpecimen() : solution() {}
 		BaseSpecimen(std::vector<int>& s) : solution(s) {}
 		BaseSpecimen(std::vector<int>&& s) : solution(s) {}
-		inline void init(std::vector<int>&& s)
+		void init(std::vector<int>&& s)
 		{
 			solution = s;
 		}
-		inline std::vector<int>& getSolution()
+		std::vector<int>& getSolution()
 		{
 			return static_cast<Child*>(this)->soulution();
 		}
-		inline void setSolution(std::vector<int>& solution)
+		void setSolution(std::vector<int>& solution)
 		{
 			static_cast<Child*>(this)->setSolution(solution);
 		}
-		inline std::vector<int>* getSolutionAddr() { return &solution; }
-		inline double getScore() { return score; }
-		inline double evaluate(Evaluator* e) { 
+		std::vector<int>* getSolutionAddr() { return &solution; }
+		double getScore() { return score; }
+		double evaluate(Evaluator* e) { 
 			score = e->evaluate(solution); 
 			return score; 
 		}
@@ -70,29 +70,29 @@ namespace population
 		BreedableSpecimen(std::vector<int>& s) : BaseSpecimen(s) {}
 		BreedableSpecimen(std::vector<int>&& s) : BaseSpecimen(s) {}
 
-		inline std::vector<int>& getSolution()
+		std::vector<int>& getSolution()
 		{
 			return solution;
 		}
 
-		inline void setSolution(std::vector<int>& solution)
+		void setSolution(std::vector<int>& solution)
 		{
 			this->solution = solution;
 		}
 
-		inline void init(std::vector<int>&& s)
+		void init(std::vector<int>&& s)
 		{
 			BaseSpecimen::init(std::move(s));
 		}
-		inline std::vector<int>* getSolutionAddr()
+		std::vector<int>* getSolutionAddr()
 		{
 			return BaseSpecimen::getSolutionAddr();
 		}
-		inline double evaluate(Evaluator* e)
+		double evaluate(Evaluator* e)
 		{
 			return BaseSpecimen::evaluate(e);
 		}
-		inline double getScore()
+		double getScore()
 		{
 			return BaseSpecimen::getScore();
 		}
