@@ -7,11 +7,8 @@ Uniform<Specimen, Generator>::Uniform(Generator& gen) : generator(gen) {}
 
 // not thread safe! not safe at all even
 template<typename Specimen, typename Generator>
-void Uniform<Specimen, Generator>::cross(std::vector<Specimen*>& selected, Specimen* output)
+void Uniform<Specimen, Generator>::cross(std::vector<Specimen*>&& selected, Specimen* output)
 {
-	std::vector <int> newSolution( size, 0 );
-	std::vector<int>* p1;
-	std::vector<int>* p2;
 	int it;
 	for (it = 0 ; it < selected.size() - 1 ; ++it)
 	{
@@ -53,6 +50,7 @@ template<typename Specimen, typename Generator>
 void Uniform<Specimen, Generator>::init(int s)
 {
 	size = s;
+	newSolution = std::vector<int>(size, 0);
 }
 
 template <typename Specimen>

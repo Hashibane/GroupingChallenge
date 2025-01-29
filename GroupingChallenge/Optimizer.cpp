@@ -4,6 +4,7 @@
 
 using namespace NGroupingChallenge;
 using namespace population;
+
 COptimizer::COptimizer(CGroupingEvaluator& cEvaluator)
 	: c_evaluator(cEvaluator)
 {
@@ -20,7 +21,7 @@ COptimizer::~COptimizer()
 
 void COptimizer::vInitialize()
 {
-	//thread local?
+	iteration = 0;
 	evaluator = new Evaluator(c_evaluator.vGetPoints(), c_evaluator.iGetUpperBound());
 
 	d_current_best_fitness = numeric_limits<double>::max();
@@ -52,7 +53,7 @@ void COptimizer::vRunIteration()
 	populationMan->waitAll();
 	auto mid = std::chrono::high_resolution_clock::now();
 	auto processing = std::chrono::duration_cast<std::chrono::milliseconds>(mid - start);
-	//std::cout << "Processing time: " << processing.count() << " ms" << std::endl;
+	std::cout << "Processing time: " << processing.count() << " ms" << std::endl;
 	for (auto& i : workers)
 	{
 		solution = &i->getSolution();
@@ -65,6 +66,9 @@ void COptimizer::vRunIteration()
 			graphicMan->getWorkers()[j]->setJob(solution);
 		++j;
 	}
+
+	++iteration;
+	migration();
 
 	if (constants::debug)
 	{
@@ -86,7 +90,28 @@ void COptimizer::vRunIteration()
 
 	// Calculate the elapsed time in milliseconds
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-	//std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
+	std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
 	std::cout << d_current_best_fitness << "\n";
+
 }
 
+void COptimizer::migration()
+{
+	int p1, p2, index;
+	if (iteration == 300)
+	{
+		for (int i = 0; i < constants::migrations; ++i)
+		{
+			p1 = c_random_engine() % constants::populations;
+			p2 = c_random_engine() % constants::populations;
+			for (int j = 0; j < constants::migrationSize; ++j)
+			{
+				index = c_random_engine() % constants::populationSize;
+				std::swap(populationMan->getWorkers()[p1]->getSpecimens()[index], populationMan->getWorkers()[p2]->getSpecimens()[index]);
+			}
+
+		}
+		iteration = 0;
+	}
+
+}

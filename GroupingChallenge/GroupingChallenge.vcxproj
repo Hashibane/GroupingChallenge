@@ -94,6 +94,7 @@
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>D:\sFML\SFML-2.6.2-windows-vc17-64-bit\SFML-2.6.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-audio.lib;sfml-graphics.lib;sfml-window.lib;sfml-network.lib;sfml-system.lib</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,6 +148,7 @@
     <ClInclude Include="Breeding.hpp" />
     <ClInclude Include="GaussianGroupingEvaluatorFactory.h" />
     <ClInclude Include="GroupingEvaluator.h" />
+    <ClInclude Include="Handler.hpp" />
     <ClInclude Include="Mutator.hpp" />
     <ClInclude Include="MyOwnEvaluator.hpp" />
     <ClInclude Include="Optimizer.h" />

@@ -56,13 +56,14 @@ std::vector<Specimen*> TournamentSelection<Specimen, Generator>::select(int k)
 
 	double buff;
 	int selected = 0;
+	auto container = bests.getContainer();
 	while (true)
 	{
 		bests.clear();
 		specimens = rs.select(constants::tournamentSize);
 		for (auto i : specimens)
 		{
-			buff = Base::evaluator->evaluate(i->getSolution());
+			buff = i->getScore();
 			if (bests.size() == constants::tournamentWinners)
 			{
 				if (bests.top().first > buff)
@@ -79,7 +80,7 @@ std::vector<Specimen*> TournamentSelection<Specimen, Generator>::select(int k)
 
 	
 		result.reserve(constants::tournamentWinners);
-		const auto container = bests.getContainer();
+		container = bests.getContainer();
 		for (auto& i : container)
 		{
 			result.push_back(i.second);

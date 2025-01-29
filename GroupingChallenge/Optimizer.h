@@ -18,6 +18,7 @@ using Strategy = population::BreedableSpecimen;
 using Selection = MixedSelection<Strategy, std::mt19937>;
 using Breeding = Uniform<Strategy>;
 using Mutator = BasicMutator<Strategy, std::mt19937>;
+
 namespace NGroupingChallenge
 {
 	class COptimizer
@@ -32,6 +33,8 @@ namespace NGroupingChallenge
 		std::vector<int>* pvGetCurrentBest() { return &v_current_best; }
 
 	private:
+		int iteration;
+
 		CGroupingEvaluator& c_evaluator; 
 		Evaluator* evaluator;
 
@@ -42,6 +45,8 @@ namespace NGroupingChallenge
 		vector<int> v_current_best;
 
 		mt19937 c_random_engine;
+
+		void migration();
 	};
 }
 

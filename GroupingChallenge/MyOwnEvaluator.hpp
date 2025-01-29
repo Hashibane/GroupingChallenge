@@ -19,6 +19,7 @@ public:
 	int upperBound();
 	const std::vector<NGroupingChallenge::CPoint>& getPoints();
 
+	std::vector<int> getRandomSolution();
 
 	int getNumberOfPoints();
 

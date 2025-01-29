@@ -40,14 +40,14 @@ template <typename Specimen, typename Selection, typename Breeding, typename Mut
 void PopulationThread<Specimen, Selection, Breeding, Mutator>::run()
 {
 	double score;
-	vector<int> candidate;
+	vector<int>* candidate;
 	double max_sc = 0;
 	double min_sc = numeric_limits<double>::max();
 
 	for (auto& i : specimens)
 	{
-		candidate = i.getSolution();
-		score = evaluator->evaluate(candidate);
+		candidate = i.getSolutionAddr();
+		score = i.evaluate(evaluator);
 		if (score > max_sc)
 		{
 			max_sc = score;
@@ -59,7 +59,7 @@ void PopulationThread<Specimen, Selection, Breeding, Mutator>::run()
 		if (score < bestScore)
 		{
 			this->bestScore = score;
-			this->solution = candidate;
+			this->solution = *candidate;
 		}
 
 	}
@@ -73,10 +73,7 @@ void PopulationThread<Specimen, Selection, Breeding, Mutator>::run()
 		mutator.setProba(constants::pMutationLow);
 	}
 
-	//todo : zrobic, zeby cross obslugiwal rvalue
-	std::vector<Specimen*> selected = selectionStrategy.select(constants::populationSize);
-
-	breedingStrategy.cross(selected, &next[0]);
+	breedingStrategy.cross(selectionStrategy.select(constants::populationSize), &next[0]);
 	/*
 	int ctr = 0;
 	for (auto& i : specimens)
@@ -126,7 +123,7 @@ void PopulationThread<Specimen, Selection, Breeding, Mutator>::setComputingData(
 	next = std::vector<Specimen>(constants::populationSize);
 	for (auto& i : specimens)
 	{
-		i.init(e->lowerBound(), e->upperBound(), e->getNumberOfPoints());
+		i.init(std::move(e->getRandomSolution()));
 	}
 	//breedingStrategy.init(e->getNumberOfPoints());
 	selectionStrategy.init(&specimens, e);
@@ -146,4 +143,10 @@ template <typename Specimen, typename Selection, typename Breeding, typename Mut
 double PopulationThread<Specimen, Selection, Breeding, Mutator>::getBestScore()
 {
 	return bestScore;
+}
+
+template <typename Specimen, typename Selection, typename Breeding, typename Mutator>
+std::vector<Specimen>& PopulationThread<Specimen, Selection, Breeding, Mutator>::getSpecimens()
+{
+	return specimens;
 }
